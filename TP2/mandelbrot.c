@@ -66,9 +66,16 @@ void DrawMandelbrot(Cord_t* P0, Cord_t* Pf)
                     iteration++;
                 }
             
-            color= AnalyzeColor(iteration);
-            al_put_pixel((DisplayDot.x), (DisplayDot.y), al_color_name(color));
-             
+            //color= AnalyzeColor(iteration);
+            //al_put_pixel((DisplayDot.x), (DisplayDot.y), al_color_name(color));
+            if(iteration==LIMIT)
+            {
+                al_put_pixel((DisplayDot.x), (DisplayDot.y), al_color_name("black"));
+            }
+            else
+            {
+                al_put_pixel((DisplayDot.x), (DisplayDot.y), al_map_rgb(10,(iteration%LIMIT),10));
+            }
         }
     }
     al_unlock_bitmap(bitmap);
