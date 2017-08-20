@@ -33,10 +33,11 @@ double CalculatePlaneRadius(Cord_t* P0, Cord_t* Pf)
 void DrawMandelbrot(Cord_t* P0, Cord_t* Pf)
 {
     ALLEGRO_BITMAP* bitmap= al_get_target_bitmap();
-    Cord_t Number={0.0,0}; //Numero complejo asociado a un determinado pixel
+    Cord_t Number={0.0,0.0}; //Numero complejo asociado a un determinado pixel
     Cord_t DisplayDot={0.0,0.0}; //representa las coordenadas de los pixels en el display
     Cord_t result={0.0,0.0};
     Cord_t DisplayMax={al_get_bitmap_width(bitmap), al_get_bitmap_height(bitmap)};
+    double PreviousResultX=0.0;
     int row;
     int col;
     int iteration = 0;
@@ -55,11 +56,13 @@ void DrawMandelbrot(Cord_t* P0, Cord_t* Pf)
             result.x=0.0;
             result.y=0.0;
             
+            
             iteration = 0;
-                while (( ((result.x)*(result.x)+(result.y)*(result.y) ) <= radius) && (iteration < LIMIT))
+                while (( ((result.x)*(result.x)+(result.y)*(result.y) ) < radius) && (iteration < LIMIT))
                 {
+                    PreviousResultX= result.x;
                     result.x=(result.x)*(result.x) - (result.y)*(result.y) + (Number.x);
-                    result.y= 2.0*(result.x)*(result.y) + (Number.y);
+                    result.y= 2.0*(PreviousResultX)*(result.y) + (Number.y);
                     iteration++;
                 }
             
