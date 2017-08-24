@@ -21,7 +21,13 @@ typedef struct
 	double y;
 } Cord_t;
 
-void poligono_fractal(double lstart, double lend, int ladosPoligono, Cord_t centro, double lconstant, char color);
+typedef struct RGBcolor{
+		unsigned int R;
+		unsigned int G;
+		unsigned int B;
+	}RGB;
+        
+void poligono_fractal(double lstart, double lend, int ladosPoligono, Cord_t centro, double lconstant, RGB color);
 			//Devuelve si se pudo efctuar el dibujo, 0 si no se logro
 
 
@@ -48,7 +54,7 @@ int main(void)
 		return -1;
 	}
     
-	char color = 'm';
+	RGB color = {255,0,255};
 	
 	al_set_target_backbuffer(display);
     Cord_t coord1 = {350.0, 350.0};
@@ -63,11 +69,11 @@ int main(void)
 }
 
 
-void poligono_fractal(double lstart, double lend, int ladosPoligono, Cord_t centro, double lconstant, char color)
+void poligono_fractal(double lstart, double lend, int ladosPoligono, Cord_t centro, double lconstant, RGB color)
 {
 	int k;
 	
-	int numeroColor;
+	/*int numeroColor;
 	
 	switch(color)
 	{
@@ -81,6 +87,7 @@ void poligono_fractal(double lstart, double lend, int ladosPoligono, Cord_t cent
 	}
 		
 	char * coloresTabla [] = {"red","green","blue","green","blue","cyan","magenta","yellow"};
+         */
 
 	double radio = lstart/(2.0*sin(M_PI / ladosPoligono));
 
@@ -100,7 +107,7 @@ void poligono_fractal(double lstart, double lend, int ladosPoligono, Cord_t cent
 		    poligono_fractal(lstart*lconstant, lend, ladosPoligono, vertice2, lconstant, color);	//Eligo como nuevo centro el ultimo vertice de la linea
 																									//y dibujo un poligono de orden n centrad en el mismo.
 		   
-			al_draw_line(vertice1.x,vertice1.y , vertice2.x, vertice2.y , al_color_name(coloresTabla[numeroColor]),1.0); //dibujo la linea entre dos vertices
+			al_draw_line(vertice1.x,vertice1.y , vertice2.x, vertice2.y , al_map_rgb((unsigned char)(color.R),(unsigned char)(color.G),(unsigned char)(color.B)),1.0); //dibujo la linea entre dos vertices
 		}
 	}
 }
